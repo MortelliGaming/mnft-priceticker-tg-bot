@@ -37,6 +37,7 @@ puppeteer.launch({
         width: 1400,
     },
     headless: true,
+    args: ['--no-sandbox','--disable-setuid-sandbox']
 }).then(browser => {
     puppeteerBrowser = browser
     initializeBot();
