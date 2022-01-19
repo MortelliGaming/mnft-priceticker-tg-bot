@@ -1,0 +1,37 @@
+{
+  "name": "baddays-tg-price-bot",
+  "version": "1.0.0",
+  "description": "a tg bot for showing an MNFT token price ticker",
+  "main": "index.js",
+  "scripts": {
+    "start": "(cd vue-components && npm run build && cd ..) && node index.js",
+    "start-with-installation": "npm run installation && npm run start",
+    "installation": "(npm install && (cd vue-components && npm install))",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@coinpaprika/api-nodejs-client": "^1.2.0",
+    "axios": "^0.21.4",
+    "chartjs-to-image": "^1.0.4",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "moment": "^2.29.1",
+    "node-html-to-image": "^3.2.0",
+    "node-telegram-bot-api": "^0.54.0",
+    "numeral": "^2.0.6",
+    "pkg-config": "^1.1.1",
+    "puppeteer": "^10.4.0",
+    "puppeteer-extra": "^3.2.3",
+    "puppeteer-extra-plugin-recaptcha": "^3.5.0",
+    "puppeteer-extra-plugin-stealth": "^2.8.1",
+    "telegraf": "^4.4.2",
+    "vite": "^2.5.10",
+    "vue": "^3.2.12"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.2.12",
+    "sass": "^1.41.1"
+  }
+}
