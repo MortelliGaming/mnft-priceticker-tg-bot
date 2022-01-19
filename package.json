@@ -4,7 +4,7 @@
   "description": "a tg bot for showing an MNFT token price ticker",
   "main": "index.js",
   "scripts": {
-    "start": "(cd vue-components && npm run build && cd ..) && node index.js",
+    "start": "node index.js",
     "build": "npm install -g @vue/cli@next && (cd vue-components && npm install && npm run build && cd ..)",
     "start-with-installation": "npm run installation && npm run start",
     "installation": "(npm install && (cd vue-components && npm install))",
