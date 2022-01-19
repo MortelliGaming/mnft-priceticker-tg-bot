@@ -38,7 +38,6 @@ puppeteer.launch({
     },
     headless: true,
 }).then(browser => {
-
     puppeteerBrowser = browser
     initializeBot();
 })
@@ -104,10 +103,9 @@ function replyWithScreenshot(ctx, url) {
         // page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36 WAIT_UNTIL=load")
         page.goto(url, {"waitUntil" : "networkidle0"}).then(async () => {
             page.screenshot().then(screenshot => {
-                ctx.replyWithPhoto({
-                    source: screenshot})
-                })
+                ctx.replyWithPhoto({source: screenshot})
             })
+        })
     })
 }
 
