@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "@coinpaprika/api-nodejs-client": "^1.2.0",
-    "@vue/cli": "^5.0.0-rc.2",
     "axios": "^0.21.4",
     "chartjs-to-image": "^1.0.4",
     "dotenv": "^10.0.0",
