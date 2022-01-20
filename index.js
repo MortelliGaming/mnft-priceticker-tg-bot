@@ -4,7 +4,7 @@ const { Telegraf } = require('telegraf')
 const puppeteer = require('puppeteer-extra')
 
 const express = require("express");
-const path = __dirname + '/dist/';
+const path = __dirname + '/vue-dist/';
 const app = express();
 app.use(express.static(path));
 app.get('/customvalueticker', function (req,res) {
