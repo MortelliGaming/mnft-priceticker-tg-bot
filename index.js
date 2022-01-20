@@ -1,5 +1,6 @@
 
 const cron = require('node-cron');
+const axios = require('axios');
 const { Telegraf } = require('telegraf')
 const puppeteer = require('puppeteer-extra')
 
@@ -7,6 +8,28 @@ const express = require("express");
 const path = __dirname + '/vue-dist/';
 const app = express();
 const secure_app = express();
+
+
+
+// keep alive
+cron.schedule('* * * * *', function() {
+    // console.log('running a task every minute');
+    axios.get('https://mnft-price-bot-tg.herokuapp.com')
+    .then(function (response) {
+        // handle success
+        console.log('the server is up')
+        // console.log(response);
+    })
+    .catch(function (error) {
+        // handle error
+        // console.log(error);
+    })
+    .then(function () {
+        // always executed
+    });
+
+});
+// 
 
 
 app.use(express.static(path));
@@ -17,8 +40,8 @@ app.get('/customvalueticker', function (req,res) {
 secure_app.get('/', function (req,res) {
     res.status(200).send('OK');
 });
-const PORT = (process.env.PORT || 80);
 
+const PORT = (process.env.PORT || 80);
 secure_app.listen(PORT, () => {
   console.log(`Secure Server is running on port ${PORT}.`);
 });
@@ -136,23 +159,3 @@ function createBaseTickerUrl(tokenSymbol, tokenName, tokenValue, tokenImage, tok
         '&abbreviateValue='+abbreviateValue
     return url;
 }
-
-// keep alive
-cron.schedule('* * * * *', function() {
-    // console.log('running a task every minute');
-    axios.get('https://mnft-price-bot-tg.herokuapp.com/')
-    .then(function (response) {
-        // handle success
-        console.log('the server is up')
-        // console.log(response);
-    })
-    .catch(function (error) {
-        // handle error
-        // console.log(error);
-    })
-    .then(function () {
-        // always executed
-    });
-
-});
-// 
