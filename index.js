@@ -6,17 +6,25 @@ const puppeteer = require('puppeteer-extra')
 const express = require("express");
 const path = __dirname + '/vue-dist/';
 const app = express();
+const secure_app = express();
+
+
 app.use(express.static(path));
 app.get('/customvalueticker', function (req,res) {
     res.sendFile(path + "index.html");
 });
-app.get('/', function (req,res) {
+
+secure_app.get('/', function (req,res) {
     res.status(200).send('OK');
 });
+const PORT = (process.env.PORT || 80);
 
-const PORT = (process.env.PORT || 8080);
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+secure_app.listen(PORT, () => {
+  console.log(`Secure Server is running on port ${PORT}.`);
+});
+
+app.listen(8080, () => {
+    console.log(`Local Server is running on port 8080.`);
 });
 
 require('dotenv').config()
@@ -114,7 +122,7 @@ function replyWithScreenshot(ctx, url) {
 }
 
 function createBaseTickerUrl(tokenSymbol, tokenName, tokenValue, tokenImage, tokenChange, timespan, tokenRank, conversionCurrency, graphData, caption, abbreviateValue) {
-    var url = 'http://localhost:'+PORT+'/customvalueticker?'+
+    var url = 'http://localhost:8080/customvalueticker?'+
         'tokenValue='+tokenValue +
         '&tokenSymbol='+tokenSymbol+
         '&tokenName='+tokenName+
