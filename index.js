@@ -1,5 +1,5 @@
 
-
+const cron = require('node-cron');
 const { Telegraf } = require('telegraf')
 const puppeteer = require('puppeteer-extra')
 
@@ -136,3 +136,22 @@ function createBaseTickerUrl(tokenSymbol, tokenName, tokenValue, tokenImage, tok
         '&abbreviateValue='+abbreviateValue
     return url;
 }
+
+// keep alive
+cron.schedule('* * * * *', function() {
+    // console.log('running a task every minute');
+    axios.get('https://mnft-price-bot-tg.herokuapp.com/')
+    .then(function (response) {
+        // handle success
+        // console.log(response);
+    })
+    .catch(function (error) {
+        // handle error
+        // console.log(error);
+    })
+    .then(function () {
+        // always executed
+    });
+
+});
+// 
