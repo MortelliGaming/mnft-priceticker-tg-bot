@@ -12,7 +12,7 @@ app.get('/customvalueticker', function (req,res) {
 });
 
 
-const PORT = 8080;
+const PORT = (process.env.PORT || 8080);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
@@ -112,7 +112,7 @@ function replyWithScreenshot(ctx, url) {
 }
 
 function createBaseTickerUrl(tokenSymbol, tokenName, tokenValue, tokenImage, tokenChange, timespan, tokenRank, conversionCurrency, graphData, caption, abbreviateValue) {
-    var url = 'http://localhost:8080/customvalueticker?'+
+    var url = 'http://localhost:'+PORT+'/customvalueticker?'+
         'tokenValue='+tokenValue +
         '&tokenSymbol='+tokenSymbol+
         '&tokenName='+tokenName+
