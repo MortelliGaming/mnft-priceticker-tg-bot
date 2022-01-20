@@ -1,0 +1,117 @@
+
+const { Telegraf } = require('telegraf')
+const puppeteer = require('puppeteer-extra')
+
+require('dotenv').config()
+const {
+    loadAllTokenIds,
+    loadCurrencies,
+    loadCoinInfo,
+    loadHistoryData,
+} = require('./coingeckoAPI')
+
+const {
+    getErrorMessage
+} = require('./errormessages')
+
+const VUE_PORT = (process.env.VUE_SERVER_PORT || 8080)
+
+var puppeteerBrowser = null
+var currencies = []
+
+loadAllTokens =  function() {
+    loadCurrencies().then(result => {
+        currencies = result
+    })
+}
+const bot = new Telegraf(process.env.TG_BOT_TOKEN)
+initializeBot = function() {
+    bot.start((ctx) => ctx.reply('This is the baddays price bot \n \n type /price for the current price'))
+    bot.command("price", (ctx) => {
+        loadAllTokenIds().then((tokenList) => {
+            var found = false
+            tokenList.map(tokenInfo => {
+                if(tokenInfo.name === "Marvelous NFTs") {
+                    replyWithTicker(ctx, tokenInfo.id, 1, 'USD', 'prices', 'Price', false)
+                    found = true;
+                }
+            })
+            if(!found)
+                ctx.reply(getErrorMessage())
+        })
+    })
+
+    bot.launch()
+
+    // Enable graceful stop
+    process.once('SIGINT', () => bot.stop('SIGINT'))
+    process.once('SIGTERM', () => {bot.stop('SIGTERM'); puppeteerBrowser.close();})
+}
+
+module.exports = {
+    setupTGBot() {
+        loadAllTokens()
+        puppeteer.launch({
+            defaultViewport: {
+                height: 820,
+                width: 1400,
+            },
+            headless: true,
+            args: ['--no-sandbox','--disable-setuid-sandbox']
+        }).then(browser => {
+            puppeteerBrowser = browser
+            initializeBot();
+        })
+    }
+}
+
+function replyWithTicker(ctx, tokenId, days, currency, priceProperty, caption, abbreviateValue = true) {
+    loadCoinInfo(tokenId).then(coinInfo => {
+        loadHistoryData(tokenId, days, priceProperty).then(tokenHistory => {
+            // console.log(coinInfo)
+            replyWithBaseTickerImage(ctx,
+                coinInfo.symbol.toUpperCase(),
+                coinInfo.name,
+                tokenHistory.prices[tokenHistory.prices.length-1].y,
+                coinInfo.image.large,
+                (tokenHistory.prices[tokenHistory.prices.length-1].y * 100 / tokenHistory.prices[0].y) - 100,
+                (days > 1 ? days + ' days': '24 hours'),
+                coinInfo.market_cap_rank,
+                currency.toUpperCase(),
+                tokenHistory.prices,
+                caption + ' in '+ currency.toUpperCase(),
+                abbreviateValue)
+        })
+    })
+}
+
+function replyWithBaseTickerImage(ctx, tokenSymbol, tokenName, tokenValue, tokenImage, tokenChange, timespan, tokenRank, conversionCurrency, graphData, caption, abbreviateValue) {
+    replyWithScreenshot(ctx, createBaseTickerUrl(tokenSymbol, tokenName, tokenValue, tokenImage, tokenChange, timespan, tokenRank, conversionCurrency, graphData, caption, abbreviateValue))
+}
+
+function replyWithScreenshot(ctx, url) {
+    puppeteerBrowser.newPage().then(async page => {
+        // page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36 WAIT_UNTIL=load")
+        page.goto(url, {"waitUntil" : "networkidle0"}).then(async () => {
+            page.screenshot().then(screenshot => {
+                ctx.replyWithPhoto({source: screenshot})
+            })
+        })
+    })
+}
+
+function createBaseTickerUrl(tokenSymbol, tokenName, tokenValue, tokenImage, tokenChange, timespan, tokenRank, conversionCurrency, graphData, caption, abbreviateValue) {
+    var url = 'http://localhost:'+VUE_PORT+'/customvalueticker?'+
+        'tokenValue='+tokenValue +
+        '&tokenSymbol='+tokenSymbol+
+        '&tokenName='+tokenName+
+        '&timespan='+timespan+
+        '&caption='+caption+
+        '&tokenChangePercentage='+tokenChange+
+        '&tokenRank='+tokenRank+
+        '&conversionCurrency='+conversionCurrency+
+        '&graphdata='+JSON.stringify(graphData)+
+        '&tokenImage='+tokenImage +
+        '&abbreviateValue='+abbreviateValue
+    return url;
+}
