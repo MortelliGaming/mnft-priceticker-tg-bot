@@ -47,7 +47,7 @@ secure_app.listen(PORT, () => {
   console.log(`Secure Server is running on port ${PORT}.`);
 });
 const VUE_PORT = (process.env.VUE_SERVER_PORT || 8080)
-app.listen(8080, () => {
+app.listen(VUE_PORT, () => {
     console.log(`Local Server is running on port `, VUE_PORT);
 });
 
