@@ -14,7 +14,8 @@ const secure_app = express();
 // keep alive
 cron.schedule('* * * * *', function() {
     // console.log('running a task every minute');
-    axios.get('https://mnft-price-bot-tg.herokuapp.com')
+    const HEROKU_URL = (process.env.HEROKU_PING_URL || 'https://mnft-price-bot-tg.herokuapp.com')
+    axios.get(HEROKU_URL)
     .then(function (response) {
         // handle success
         console.log('the server is up')
@@ -22,7 +23,7 @@ cron.schedule('* * * * *', function() {
     })
     .catch(function (error) {
         // handle error
-        // console.log(error);
+        console.log('server not found: ', HEROKU_URL);
     })
     .then(function () {
         // always executed
@@ -45,9 +46,9 @@ const PORT = (process.env.PORT || 80);
 secure_app.listen(PORT, () => {
   console.log(`Secure Server is running on port ${PORT}.`);
 });
-
+const VUE_PORT = (process.env.VUE_SERVER_PORT || 8080)
 app.listen(8080, () => {
-    console.log(`Local Server is running on port 8080.`);
+    console.log(`Local Server is running on port `, VUE_PORT);
 });
 
 require('dotenv').config()
@@ -145,7 +146,7 @@ function replyWithScreenshot(ctx, url) {
 }
 
 function createBaseTickerUrl(tokenSymbol, tokenName, tokenValue, tokenImage, tokenChange, timespan, tokenRank, conversionCurrency, graphData, caption, abbreviateValue) {
-    var url = 'http://localhost:8080/customvalueticker?'+
+    var url = 'http://localhost:'+VUE_PORT+'/customvalueticker?'+
         'tokenValue='+tokenValue +
         '&tokenSymbol='+tokenSymbol+
         '&tokenName='+tokenName+
