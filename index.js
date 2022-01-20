@@ -11,10 +11,6 @@ app.get('/customvalueticker', function (req,res) {
     res.sendFile(path + "index.html");
 });
 
-app.get('/', function (req,res) {
-    res.status(200).send("OK");
-});
-
 
 const PORT = 8080;
 app.listen(PORT, () => {
