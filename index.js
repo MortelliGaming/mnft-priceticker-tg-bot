@@ -143,6 +143,7 @@ cron.schedule('* * * * *', function() {
     axios.get('https://mnft-price-bot-tg.herokuapp.com/')
     .then(function (response) {
         // handle success
+        console.log('the server is up')
         // console.log(response);
     })
     .catch(function (error) {
