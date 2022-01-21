@@ -26,7 +26,7 @@ loadAllTokens =  function() {
 }
 const bot = new Telegraf(process.env.TG_BOT_TOKEN)
 initializeBot = function() {
-    bot.start((ctx) => ctx.reply('This is the baddays price bot \n \n type /price for the current price'))
+    bot.start((ctx) => ctx.reply('This is the baddays price bot type \n \n  /price  \n \n /token  \n \n /contract  \n \n /trade'))
     bot.command("price", (ctx) => {
         loadAllTokenIds().then((tokenList) => {
             var found = false
