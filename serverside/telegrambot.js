@@ -229,6 +229,7 @@ function replyWithScreenshot(ctx, url) {
         page.goto(url, {"waitUntil" : "networkidle0"}).then(async () => {
             page.screenshot().then(screenshot => {
                 ctx.replyWithPhoto({source: screenshot})
+                page.close();
             })
         })
     })
