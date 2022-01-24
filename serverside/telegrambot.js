@@ -60,24 +60,6 @@ initializeBot = function() {
 
     bot.on('callback_query', (ctx) => {
         switch(ctx.callbackQuery.data.toLowerCase()) {
-            case 'contract_bsc':
-                ctx.reply('*BSC Contract* \n 0x33BE7644c0E489b3A0c639D103392D4F3e338158', { parse_mode: "Markdown" })
-                try{
-                    ctx.deleteMessage();
-                } catch{}
-                break;
-            case 'contract_polygon':
-                ctx.reply('*Polygon (Matic) Contract* \n 0xd281aF594Cbb99E8469f3591D57A0C72EB725bdB', { parse_mode: "Markdown" })
-                try{
-                    ctx.deleteMessage();
-                } catch{}
-                break;
-            case 'contract_velas':
-                ctx.reply('*Velas Contract* \n 0x4cBA3447E51239065310E24c02C190945ad761d9', { parse_mode: "Markdown" })
-                try{
-                    ctx.deleteMessage();
-                } catch{}
-                break;
             case 'trade_bsc':
                 ctx.reply('*PancakeSwap* \n [Swap on Pancake](https://pancakeswap.finance/swap?outputCurrency=0x33BE7644c0E489b3A0c639D103392D4F3e338158)', { parse_mode: "Markdown", disable_web_page_preview: true })
                 try{
