@@ -3,8 +3,6 @@ const { Telegraf, Markup } = require('telegraf')
 const puppeteer = require('puppeteer-extra')
 const { 
     createCoingeckoPriceTickerUrl,
-    createCoingeckoVolumeTickerUrl,
-    createCoingeckoMarketCapTickerUrl,
     createBasicTextTickerUrl 
 } = require('./urlHelper')
 
@@ -24,16 +22,9 @@ initializeBot = function() {
     })
 
     bot.command("contract", (ctx) => {
-        // ask bsc/polyon(matic)/velas
-        var keyData =  ['BSC', 'Polygon', 'Velas'].map(item => {
-            return {
-                callback_data: 'contract_' + item,
-                text: item,
-            }
-        })
-        ctx.reply(`on which blockchain?`, { reply_markup: {
-            inline_keyboard: [keyData],
-        }});
+        replyWithBasicTextTickerImage(ctx, 'Polygon Contract', '0xd281aF594Cbb99E8469f3591D57A0C72EB725bdB')         
+        replyWithBasicTextTickerImage(ctx, 'BSC Contract', '0x33BE7644c0E489b3A0c639D103392D4F3e338158')         
+        replyWithBasicTextTickerImage(ctx, 'Velas Contract', '0x4cBA3447E51239065310E24c02C190945ad761d9')
     })
     bot.command("trade", (ctx) => {
         // ask bsc/polyon(matic)/velas/cex
@@ -184,12 +175,16 @@ function replyWithMNFTTokenTickerImage(ctx) {
     replyWithScreenshot(ctx, createCoingeckoPriceTickerUrl('marvelous-nfts', 1, 'usd'))
 }
 
-function replyWithScreenshot(ctx, url) {
+function replyWithBasicTextTickerImage(ctx, caption, value) {
+    replyWithScreenshot(ctx, createBasicTextTickerUrl(caption, value), value)
+}
+
+function replyWithScreenshot(ctx, url, caption = null) {
     puppeteerBrowser.newPage().then(async page => {
         // page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36 WAIT_UNTIL=load")
         page.goto(url, {"waitUntil" : "networkidle0"}).then(async () => {
             page.screenshot().then(screenshot => {
-                ctx.replyWithPhoto({source: screenshot})
+                caption === null ? ctx.replyWithPhoto({source: screenshot}) : ctx.replyWithPhoto({source: screenshot}, {caption: caption}) 
                 page.close();
             })
         })

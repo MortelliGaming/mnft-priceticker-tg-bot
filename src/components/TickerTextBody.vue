@@ -22,11 +22,11 @@ export default {
 
 <style lang="scss" scoped>
 .token-price {
-  font-size: 50px;
+  font-size: 75px;
   font-weight: bold;
 }
 .token-market-cap {
-  font-size: 80px;
+  font-size: 130px;
   font-weight: bold;
 }
 .hero-body {

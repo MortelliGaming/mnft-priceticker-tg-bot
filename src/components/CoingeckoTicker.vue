@@ -123,12 +123,4 @@ export default {
 section {
   padding: 50px !important;
 }
-.hero {
-  background-image: url('../assets/cmf_transp.png');
-  background-repeat: no-repeat;
-  object-fit: contain;
-  background-color: black;
-  background-size: contain;
-  background-position: center;
-}
 </style>

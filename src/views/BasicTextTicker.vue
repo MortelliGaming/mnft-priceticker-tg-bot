@@ -20,7 +20,7 @@ section {
   padding: 50px !important;
 }
 .hero {
-  background-image: url('../assets/cmf_transp.png');
+  background-image: url('../assets/baddays_ticker_background_1.png');
   background-repeat: no-repeat;
   object-fit: contain;
   background-color: black;
