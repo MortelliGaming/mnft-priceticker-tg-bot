@@ -1,17 +1,16 @@
 import { createWebHistory, createRouter } from "vue-router";
-import CustomValueTicker from "../views/CustomValueTicker.vue";
-import TopTenTicker from "../views/TopTenTicker.vue";
-
+import CoingeckoPriceTicker from "../views/CoingeckoPriceTicker.vue";
+import BasicTextTicker from "../views/BasicTextTicker.vue";
 const routes = [
   {
-    path: "/customvalueticker",
-    name: "customvalueticker",
-    component: CustomValueTicker,
+    path: "/coingeckopriceticker",
+    name: "coingeckopriceticker",
+    component: CoingeckoPriceTicker,
   },
   {
-    path: "/toptenticker",
-    name: "toptenticker",
-    component: TopTenTicker,
+    path: "/basictextticker",
+    name: "basictextticker",
+    component: BasicTextTicker,
   },
 ];
 

@@ -26,7 +26,7 @@ defineProps({
         <div class="column is-5">
           <div class="is-flex-direction-column has-text-right token-change text-bordered">
             <div class="token-name" :style="'color:'+(changePercentage >= 0 ? 'green' : 'red')+';'">{{ numeral(changePercentage).format("0,0.00") }}%</div>
-            <div >{{ days }}</div>
+            <div>{{ days }}</div>
           </div>
         </div>
       </div>

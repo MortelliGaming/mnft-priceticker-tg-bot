@@ -1,44 +1,26 @@
 
 const { Telegraf, Markup } = require('telegraf')
 const puppeteer = require('puppeteer-extra')
+const { 
+    createCoingeckoPriceTickerUrl,
+    createCoingeckoVolumeTickerUrl,
+    createCoingeckoMarketCapTickerUrl,
+    createBasicTextTickerUrl 
+} = require('./urlHelper')
 
 require('dotenv').config()
-const {
-    loadAllTokenIds,
-    loadCurrencies,
-    loadCoinInfo,
-    loadHistoryData,
-} = require('./coingeckoAPI')
 
 const {
     getErrorMessage
 } = require('./errormessages')
 
-const VUE_PORT = (process.env.VUE_SERVER_PORT || 8080)
-
 var puppeteerBrowser = null
-var currencies = []
 
-loadAllTokens =  function() {
-    loadCurrencies().then(result => {
-        currencies = result
-    })
-}
 const bot = new Telegraf(process.env.TG_BOT_TOKEN)
 initializeBot = function() {
     bot.start((ctx) => ctx.reply('This is the baddays price bot type \n \n  /price  \n \n /token  \n \n /contract  \n \n /trade'))
     bot.command("price", (ctx) => {
-        loadAllTokenIds().then((tokenList) => {
-            var found = false
-            tokenList.map(tokenInfo => {
-                if(tokenInfo.name === "Marvelous NFTs") {
-                    replyWithTicker(ctx, tokenInfo.id, 1, 'USD', 'prices', 'Price', false)
-                    found = true;
-                }
-            })
-            if(!found)
-                ctx.reply(getErrorMessage())
-        })
+        replyWithMNFTTokenTickerImage(ctx)
     })
 
     bot.command("contract", (ctx) => {
@@ -184,7 +166,6 @@ initializeBot = function() {
 
 module.exports = {
     setupTGBot() {
-        loadAllTokens()
         puppeteer.launch({
             defaultViewport: {
                 height: 820,
@@ -199,28 +180,8 @@ module.exports = {
     }
 }
 
-function replyWithTicker(ctx, tokenId, days, currency, priceProperty, caption, abbreviateValue = true) {
-    loadCoinInfo(tokenId).then(coinInfo => {
-        loadHistoryData(tokenId, days, priceProperty).then(tokenHistory => {
-            // console.log(coinInfo)
-            replyWithBaseTickerImage(ctx,
-                coinInfo.symbol.toUpperCase(),
-                coinInfo.name,
-                tokenHistory.prices[tokenHistory.prices.length-1].y,
-                coinInfo.image.large,
-                (tokenHistory.prices[tokenHistory.prices.length-1].y * 100 / tokenHistory.prices[0].y) - 100,
-                (days > 1 ? days + ' days': '24 hours'),
-                coinInfo.market_cap_rank,
-                currency.toUpperCase(),
-                tokenHistory.prices,
-                caption + ' in '+ currency.toUpperCase(),
-                abbreviateValue)
-        })
-    })
-}
-
-function replyWithBaseTickerImage(ctx, tokenSymbol, tokenName, tokenValue, tokenImage, tokenChange, timespan, tokenRank, conversionCurrency, graphData, caption, abbreviateValue) {
-    replyWithScreenshot(ctx, createBaseTickerUrl(tokenSymbol, tokenName, tokenValue, tokenImage, tokenChange, timespan, tokenRank, conversionCurrency, graphData, caption, abbreviateValue))
+function replyWithMNFTTokenTickerImage(ctx) {
+    replyWithScreenshot(ctx, createCoingeckoPriceTickerUrl('marvelous-nfts', 1, 'usd'))
 }
 
 function replyWithScreenshot(ctx, url) {
@@ -233,20 +194,4 @@ function replyWithScreenshot(ctx, url) {
             })
         })
     })
-}
-
-function createBaseTickerUrl(tokenSymbol, tokenName, tokenValue, tokenImage, tokenChange, timespan, tokenRank, conversionCurrency, graphData, caption, abbreviateValue) {
-    var url = 'http://localhost:'+VUE_PORT+'/customvalueticker?'+
-        'tokenValue='+tokenValue +
-        '&tokenSymbol='+tokenSymbol+
-        '&tokenName='+tokenName+
-        '&timespan='+timespan+
-        '&caption='+caption+
-        '&tokenChangePercentage='+tokenChange+
-        '&tokenRank='+tokenRank+
-        '&conversionCurrency='+conversionCurrency+
-        '&graphdata='+JSON.stringify(graphData)+
-        '&tokenImage='+tokenImage +
-        '&abbreviateValue='+abbreviateValue
-    return url;
 }

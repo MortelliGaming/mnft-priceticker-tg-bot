@@ -37,8 +37,8 @@ defineProps({
 <template>
   <div class="hero-body is-flex is-justify-content-center" :style="'background-image:url('+backgroundChartUrl+')'">
     <div :class="{'is-flex-direction-column has-text-centered text-bordered':true, 'body-content': caption}">
-      <div v-if="caption" class="token-market-cap"> {{ caption }}</div>
-      <div class="token-price">{{ currencySymbol !== '' ? currencySymbol : currency }} {{ numeral(Number.parseFloat(value)).format(Number.parseFloat(value) > 1 ? (abbreviateValue ? " 0,0.00 a" : " 0,0.00"): " 0.000000000").toUpperCase()}}</div>
+      <div v-if="caption" class="token-market-cap"> {{ caption.toUpperCase() }}</div>
+      <div class="token-price">{{ currencySymbol !== '' ? currencySymbol : 'USD' }} {{ numeral(Number.parseFloat(value).toPrecision()).format(Number.parseFloat(value).toPrecision() > 1 ? (abbreviateValue ? " 0,0.00 a" : " 0,0.00"): " 0.000000000").toUpperCase()}}</div>
     </div>
   </div>
 </template>
@@ -58,7 +58,7 @@ export default {
   font-weight: bold;
 }
 .token-market-cap {
-  font-size: 80px;
+  font-size: 75px;
   font-weight: bold;
 }
 .hero-body {
