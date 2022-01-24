@@ -2,37 +2,36 @@
 import getSymbolFromCurrency from 'currency-symbol-map';
 import { chartOptions, generateChart } from '../helpers/chartOptions.js';
 
-import TickerFooter from '../components/TickerFooter.vue';
-import TickerHeader from '../components/TickerHeader.vue';
-import TickerBody from '../components/TickerBody.vue';
-import { onBeforeMount } from '@vue/runtime-core';
+import MNFTTickerFooter from '../components/MNFTTickerFooter.vue';
+import MNFTTickerHeader from '../components/MNFTTickerHeader.vue';
+import MNFTTickerBody from '../components/MNFTTickerBody.vue';
 </script>
 
 <template>
     <section class="hero is-fullheight p-5" v-if="lineChartUrl">
-      <ticker-header
+      <m-n-f-t-ticker-header
         :tokenImage="tokenImage"
         :tokenName="tokenName"
         :tokenSymbol="tokenSymbol && tokenSymbol"
         :tokenRank="tokenRank"
         :changePercentage="Number.parseFloat(tokenChangePercentage)"
         :days="timespan" />
-      <ticker-body
+      <m-n-f-t-ticker-body
         :abbreviateValue="abbreviateValue == 'true'"
         :currencySymbol="getSymbolFromCurrency(conversionCurrency)"
         :caption="caption"
         :value="Number.parseFloat(tokenValue)"
         :backgroundChartUrl="lineChartUrl"/>
-      <ticker-footer />
+      <m-n-f-t-ticker-footer />
     </section>
 </template>
 
 <script>
 export default {
   components: {
-    TickerFooter,
-    TickerHeader,
-    TickerBody,
+    MNFTTickerFooter,
+    MNFTTickerHeader,
+    MNFTTickerBody,
   },
   data() {
     return {

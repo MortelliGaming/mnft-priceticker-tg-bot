@@ -1,26 +1,26 @@
 <script setup>
-  import TickerFooter from '../components/TickerFooter.vue';
-  import TickerTitleHeader from '../components/TickerTitleHeader.vue';
-  import TickerTopTenBody from '../components/TickerTopTenBody.vue';
+  import MNFTTickerFooter from '../components/MNFTTickerFooter.vue';
+  import MNFTTickerTitleHeader from '../components/MNFTTickerTitleHeader.vue';
+  import MNFTTickerTopTenBody from '../components/MNFTTickerTopTenBody.vue';
 
 </script>
 
 <template>
     <section class="hero is-fullheight p-5" v-if="tokenInfos">
-      <ticker-title-header 
+      <m-n-f-t-ticker-title-header 
         :title="'Top 10'"/>
-      <ticker-top-ten-body
+      <m-n-f-t-ticker-top-ten-body
         :tokenInfos="tokenInfos"/>
-      <ticker-footer />
+      <m-n-f-t-ticker-footer />
     </section>
 </template>
 
 <script>
 export default {
   components: {
-    TickerFooter,
-    TickerTitleHeader,
-    TickerTopTenBody
+    MNFTTickerFooter,
+    MNFTTickerTitleHeader,
+    MNFTTickerTopTenBody
   },
   data() {
     return {

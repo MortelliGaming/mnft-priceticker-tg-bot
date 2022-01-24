@@ -1,5 +1,3 @@
-const cron = require('node-cron');
-const axios = require('axios');
 const { setupTGBot } = require('./serverside/telegrambot')
 
 require('dotenv').config()
@@ -7,29 +5,6 @@ const express = require("express");
 const path = __dirname + '/dist/';
 const app = express();
 const secure_app = express();
-
-
-
-// keep alive
-cron.schedule('* * * * *', function() {
-    // console.log('running a task every minute');
-    const HEROKU_URL = (process.env.HEROKU_PING_URL || 'https://mnft-price-bot-tg.herokuapp.com')
-    axios.get(HEROKU_URL)
-    .then(function (response) {
-        // handle success
-        console.log('the server is up')
-        // console.log(response);
-    })
-    .catch(function (error) {
-        // handle error
-        console.log('server not found: ', HEROKU_URL);
-    })
-    .then(function () {
-        // always executed
-    });
-
-});
-// 
 
 
 app.use(express.static(path));
