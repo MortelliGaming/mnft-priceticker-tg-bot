@@ -37,7 +37,9 @@ initializeBot = function() {
     })
     bot.command("trade", (ctx) => {
         // ask bsc/polyon(matic)/velas/cex
-        ctx.replyWithPhoto({source: './assets/trading.jpg'}, {caption: '[*Swap on Pancake*](https://pancakeswap.finance/swap?outputCurrency=0x33BE7644c0E489b3A0c639D103392D4F3e338158) \n'+
+        ctx.replyWithPhoto({source: './assets/trading.jpg'}, {caption: 
+            '*make sure to have the slippage set to 6%*\n' +
+            '[*Swap on Pancake*](https://pancakeswap.finance/swap?outputCurrency=0x33BE7644c0E489b3A0c639D103392D4F3e338158) \n'+
             '[*Swap on Quickswap*](https://quickswap.exchange/#/swap?outputCurrency=0xd281aF594Cbb99E8469f3591D57A0C72EB725bdB) \n'+
             '[*Trade on Ascendex*](https://ascendex.com/en/basic/cashtrade-spottrading/usdt/mnft)',
             parse_mode: "MarkdownV2", disable_web_page_preview: true})
