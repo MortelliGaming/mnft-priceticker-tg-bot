@@ -35,7 +35,7 @@ initializeBot = function() {
     
     })
     bot.command("bridge", (ctx) => {
-        ctx.replyWithPhoto({source: './assets/trading.jpg'}, {caption: 
+        ctx.replyWithPhoto({source: './assets/bridges.jpg'}, {caption: 
             '[*Velas <\\-\\> BSC*](https://bridge.velaspad.io/#contract) \n'+
             '[*Polygon <\\-\\> BSC*](https://bridge.terablock.com)',
             parse_mode: "MarkdownV2", disable_web_page_preview: true})
