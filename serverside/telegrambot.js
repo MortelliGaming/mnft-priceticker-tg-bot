@@ -23,8 +23,11 @@ initializeBot = function() {
     })
 
     bot.command("contract", (ctx) => {
-        ctx.replyWithPhoto({source: './assets/contracts.jpg'}, {caption: '*Polygon:* 0xd281aF594Cbb99E8469f3591D57A0C72EB725bdB \n *BSC:* 0x33BE7644c0E489b3A0c639D103392D4F3e338158 \n *Velas:* 0x4cBA3447E51239065310E24c02C190945ad761d9',
-        parse_mode: "Markdown", disable_web_page_preview: true})
+        ctx.replyWithPhoto({source: './assets/contracts.jpg'}, {caption: 
+            '*Polygon:* [0xd281aF594Cbb99E8469f3591D57A0C72EB725bdB](https://polygonscan.com/address/0xd281aF594Cbb99E8469f3591D57A0C72EB725bdB) \n'+
+            '*BSC:* [0x33BE7644c0E489b3A0c639D103392D4F3e338158](https://bscscan.com/address/0x33BE7644c0E489b3A0c639D103392D4F3e338158) \n'+
+            '*Velas:* [0x4cBA3447E51239065310E24c02C190945ad761d9](https://evmexplorer.velas.com/address/0x4cBA3447E51239065310E24c02C190945ad761d9/)',
+        parse_mode: "MarkdownV2", disable_web_page_preview: true})
     })
     bot.command("trade", (ctx) => {
         // ask bsc/polyon(matic)/velas/cex
