@@ -21,7 +21,13 @@ initializeBot = function() {
     bot.command("price", (ctx) => {
         replyWithMNFTTokenTickerImage(ctx)
     })
-
+    bot.command("audit", (ctx) => {
+        ctx.replyWithPhoto({source: './assets/audit.jpg'}, {caption: 
+            '*MarvelousNFTs MNFT Hacken Audit Report:* \n \n'+
+            '[https://marvelousnfts\\.com/](https://marvelousnfts.com/news-detail?n_id=228) \n\n'+
+            'We’re pleased to publicise the results of our recent Audit from Hacken\\. Onwards and upwards for the MNFT token\\!',
+        parse_mode: "MarkdownV2", disable_web_page_preview: true})
+    })
     bot.command("contract", (ctx) => {
         ctx.replyWithPhoto({source: './assets/contracts.jpg'}, {caption: 
             '*Polygon:* [0xd281aF594Cbb99E8469f3591D57A0C72EB725bdB](https://polygonscan.com/address/0xd281aF594Cbb99E8469f3591D57A0C72EB725bdB) \n'+
