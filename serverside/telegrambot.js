@@ -52,6 +52,15 @@ initializeBot = function() {
             parse_mode: "MarkdownV2", disable_web_page_preview: true})
     })
 
+    bot.command("claim", (ctx) => {
+        ctx.replyWithPhoto({source: './assets/claim.jpg'}, {caption: 
+            'The Claim portal allows users to claim their private sale allocations\\. This includes whitelisted allocations and Manga owners allocations who completed the required tasks\\.\n\n'+
+            '[*claim\\.baddays\\.io*](https://claim.baddays.io) \n\n'+
+            '*More info:*\n'+
+            '[marvelousnfts\\.com](https://marvelousnfts.com/news-detail?n_id=231)',
+            parse_mode: "MarkdownV2", disable_web_page_preview: true})
+    })
+
     bot.launch()
 
     // Enable graceful stop
