@@ -28,7 +28,7 @@ initializeBot = function() {
     */
 
     bot.start((ctx) => ctx.reply(
-        '*This is the baddays bot follwing commands are available:* \n \n'+
+        '*This is the baddays bot\\.\n Follwing commands are available:* \n \n'+
         '*price* \\- shows a ticker image with the current price \n' +
         '*contract* \\- shows the contracts and links \n' +
         '*trade* \\- shows the links to trading platforms \n' +
