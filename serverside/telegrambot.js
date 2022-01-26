@@ -17,7 +17,29 @@ var puppeteerBrowser = null
 
 const bot = new Telegraf(process.env.TG_BOT_TOKEN)
 initializeBot = function() {
-    bot.start((ctx) => ctx.reply('This is the baddays price bot type \n \n  /price  \n \n /token  \n \n /contract  \n \n /trade'))
+    /*
+    price - shows a ticker image with the current price
+    contract - shows the contracts and links
+    trade - shows the links to trading platforms
+    bridge - shows the links to the bridges
+    audit - shows the audit link
+    claim - shows the MNFT claim link
+    feedback - shows the link to the google feedback form
+    */
+
+    bot.start((ctx) => ctx.reply(
+        '*This is the baddays bot follwing commands are available:* \n \n'+
+        '*price* \\- shows a ticker image with the current price \n' +
+        '*contract* \\- shows the contracts and links \n' +
+        '*trade* \\- shows the links to trading platforms \n' +
+        '*bridge* \\- shows the links to the bridges \n' +
+        '*audit* \\- shows the audit link \n' +
+        '*claim* \\- shows the MNFT claim link \n' +
+        '*feedback* \\- shows the link to the google feedback form',
+        {
+            parse_mode: "MarkdownV2"
+        }
+        ))
     bot.command("price", (ctx) => {
         replyWithMNFTTokenTickerImage(ctx)
     })
@@ -58,6 +80,14 @@ initializeBot = function() {
             '[*claim\\.baddays\\.io*](https://claim.baddays.io) \n\n'+
             '*More info:*\n'+
             '[marvelousnfts\\.com](https://marvelousnfts.com/news-detail?n_id=231)',
+            parse_mode: "MarkdownV2", disable_web_page_preview: true})
+    })
+
+    bot.command("feedback", (ctx) => {
+        ctx.replyWithPhoto({source: './assets/feedback.jpg'}, {caption: 
+            'Thanks for playing Baddays\\.io the Beta\\! As we continue to balance and improve your feedback is important\\.\n\n'+
+            '*Please leave your feedback below:* \n'+
+            '[google feedback form](https://forms.gle/XVCYm6gZxuofEBNX6)',
             parse_mode: "MarkdownV2", disable_web_page_preview: true})
     })
 
