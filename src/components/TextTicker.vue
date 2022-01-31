@@ -1,6 +1,6 @@
 <script setup>
 
-import TickerFooter from '../components/TickerFooter.vue';
+// import TickerFooter from '../components/TickerFooter.vue';
 import TickerTextBody from '../components/TickerTextBody.vue';
 
 defineProps({
@@ -14,7 +14,7 @@ defineProps({
 <template>
     <section class="hero is-fullheight p-5">
       <ticker-text-body :caption="caption" :value="value" />
-      <ticker-footer />
+      <!-- <ticker-footer /> -->
     </section>
 </template>
 
@@ -22,7 +22,7 @@ defineProps({
 export default {
   name: 'TextTicker',
   components: {
-    TickerFooter,
+    // TickerFooter,
     TickerTextBody,
   },
   data() {
@@ -31,10 +31,10 @@ export default {
   },
   computed: {
     caption() {
-      return (this.$route.query.caption ? this.$route.query.caption : 'Contract')
+      return (this.$route.query.caption ? this.$route.query.caption : '')
     },
     value() {
-      return (this.$route.query.value ? this.$route.query.value : '0x').toLowerCase()
+      return (this.$route.query.value ? this.$route.query.value : '').toLowerCase()
     },
   },
   methods: {

@@ -30,6 +30,7 @@ export default {
   font-weight: bold;
 }
 .hero-body {
+  color: rgba(245, 180, 41, 0.87);
   background-position: center;
   background-repeat: no-repeat;
   background-size:contain;

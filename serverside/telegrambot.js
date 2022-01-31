@@ -25,6 +25,8 @@ const commandsMessage = 'Following commands are available:\n\n'+
     '*bridge* \\- shows the links to the bridges\n' +
     '*audit* \\- shows the audit link\n' +
     '*claim* \\- shows the MNFT claim link\n' +
+    '*discord* \\- shows link to our discord\n' +
+    '*fee* \\- shows what happens with the trading fees\n' +
     '*feedback* \\- shows the link to the google feedback form'
 
 const auditMessage = '*MarvelousNFTs MNFT Hacken Audit Report:* \n \n'+
@@ -51,6 +53,16 @@ const feedbackMessage='Thanks for playing Baddays\\.io the Beta\\! As we continu
     '*Please leave your feedback below:* \n'+
     '[google feedback form](https://forms.gle/XVCYm6gZxuofEBNX6)'
 
+const discordMessage='Don’t miss the BadDays Character Hunt over on discord\\! Daily challenges and events to keep you busy and earn some BDC vouchers\\!\n\n'+
+    '*Join today and see our International community rooms including Turkish, Chinese and more\\!* \n'+
+    '[baddays discord](https://discord.gg/3XcqFbGP8m)'
+
+const taxMessage='*5% transaction fee* composed as follow: \n' +
+    '*1%* burn \n'+
+    '*2%* distributed to staking pool\n'+
+    '*1%* liquidity reserve \n'+
+    '*1%* season battle rewards'
+
 initializeBot = function() {
     /*
     commands - shows all commands
@@ -60,6 +72,8 @@ initializeBot = function() {
     bridge - shows the links to the bridges
     audit - shows the audit link
     claim - shows the MNFT claim link
+    discord - shows the link to our discord
+    fee - shows what happens with the tx fees
     feedback - shows the link to the google feedback form
     */
 
@@ -112,6 +126,18 @@ initializeBot = function() {
             parse_mode: "MarkdownV2", disable_web_page_preview: true})
     })
 
+    bot.command("discord", (ctx) => {
+        replyWithBasicTextTickerImage(ctx, 'baddays discord', '', { 
+            caption: discordMessage,
+            parse_mode: "MarkdownV2", disable_web_page_preview: true})
+    })
+
+    bot.command("fee", (ctx) => {
+        replyWithBasicTextTickerImage(ctx, 'MNFT fees', '', { 
+            caption: taxMessage,
+            parse_mode: "MarkdownV2", disable_web_page_preview: true})
+    })
+
     bot.launch()
 
     // Enable graceful stop
@@ -135,6 +161,10 @@ module.exports = {
     }
 }
 
+function replyWithBasicTextTickerImage(ctx, caption, value, message) {
+    replyWithScreenshot(ctx, createBasicTextTickerUrl(caption, value), message)
+}
+
 function replyWithMNFTTokenTickerImage(ctx) {
     replyWithScreenshot(ctx, createCoingeckoPriceTickerUrl('marvelous-nfts', 1, 'usd'))
 }
@@ -144,7 +174,7 @@ function replyWithScreenshot(ctx, url, caption = null) {
         // page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36 WAIT_UNTIL=load")
         page.goto(url, {"waitUntil" : "networkidle0"}).then(async () => {
             page.screenshot().then(screenshot => {
-                caption === null ? ctx.replyWithPhoto({source: screenshot}) : ctx.replyWithPhoto({source: screenshot}, {caption: caption}) 
+                caption === null ? ctx.replyWithPhoto({source: screenshot}) : ctx.replyWithPhoto({source: screenshot}, caption) 
                 page.close();
             })
         })
