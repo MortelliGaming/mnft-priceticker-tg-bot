@@ -55,7 +55,7 @@ const feedbackMessage='Thanks for playing Baddays\\.io the Beta\\! As we continu
 
 const discordMessage='Don’t miss the BadDays Character Hunt over on discord\\! Daily challenges and events to keep you busy and earn some BDC vouchers\\!\n\n'+
     '*Join today and see our International community rooms including Turkish, Chinese and more\\!* \n'+
-    '[baddays discord](https://discord.gg/3XcqFbGP8m)'
+    '[baddays discord](https://discord.gg/EDG88XbXaz)'
 
 const taxMessage='*5% transaction fee* composed as follow: \n' +
     '*1%* burn \n'+
